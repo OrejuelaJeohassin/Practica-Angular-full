@@ -1,0 +1,60 @@
+<div class="row mb-3 g-3">
+  <ng-container *ngIf="pokemonsAll && pokemonsAll.results && pokemonsAll.results.length>0 "; else noPokemons>
+    <div class="col-3" *ngFor="let pokemon of pokemonsAll.results" >
+      <!-- Lista de Card -->
+      <div class="card fixed-card">
+
+
+        <div *ngIf="!imageLoaded">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"
+          width="200" height="200"
+          style="shape-rendering: auto; display: block; background: rgb(255, 255, 255);">
+       <g>
+         <path style="transform:scale(0.8);transform-origin:50px 50px"
+               stroke-linecap="round"
+               d="M24.3 30C11.4 30 5 43.3 5 50s6.4 20 19.3 20c19.3 0 32.1-40 51.4-40
+                  C88.6 30 95 43.3 95 50s-6.4 20-19.3 20C56.4 70 43.6 30 24.3 30z"
+               stroke-dasharray="42.76482137044271 42.76482137044271"
+               stroke-width="8"
+               stroke="#26e90c"
+               fill="none">
+           <animate values="0;256.58892822265625"
+                    keyTimes="0;1"
+                    dur="1s"
+                    repeatCount="indefinite"
+                    attributeName="stroke-dashoffset" />
+         </path>
+       </g>
+     </svg>
+
+
+        </div>
+        <img [src]="pokemon.data?.sprites?.versions?.['generation-v']?.['black-white']?.animated?.front_default" 
+        class="card-img-top fixed-img" 
+        alt="..."
+        loading="lazy"
+        (load)="imageLoaded = true" 
+        >
+        
+
+
+
+        <div class="card-body fixed-body">
+          <h5 class="card-title">{{pokemon.name}}</h5>
+          <p class="card-text">{{pokemon.data?.base_experience}}</p>
+          <li class="btn btn-outline-primary" (click)="openModal(pokemon.data!)">Mas Informacion</li>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noPokemons>
+    <div class="col-12">
+      <div class="alert alert-warning" role="alert">
+        No existen Pokémon que coincidan con tu búsqueda
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<pokemon-modal></pokemon-modal>

@@ -1,0 +1,10 @@
+<div class="search-container">
+  <input 
+    type="text" 
+    [value]="query" 
+    (input)="updateQuery($event)"
+    (keyup.enter)="onSearch()" 
+    placeholder="Buscar libros..."
+  >
+  <button (click)="onSearch()">Buscar</button>
+</div>

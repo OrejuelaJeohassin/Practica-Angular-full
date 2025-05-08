@@ -1,0 +1,30 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="onClose()">×</button>
+    
+    <div class="modal-body">
+      <div class="modal-cover">
+        <img [src]="coverUrl" alt="Portada del libro" class="book-cover-large">
+      </div>
+      
+      <div class="modal-details">
+        <h2>{{ book.title }}</h2>
+        <p><strong>Autor:</strong> {{ authors }}</p>
+        <p *ngIf="book.first_publish_year !== undefined">
+          <strong>Año de publicación:</strong> {{ book.first_publish_year }}
+        </p>
+        <p *ngIf="firstIsbn">
+          <strong>ISBN:</strong> {{ firstIsbn }}
+        </p>
+        <a 
+          *ngIf="book.key"
+          href="https://openlibrary.org{{ book.key }}" 
+          target="_blank" 
+          class="external-link"
+        >
+          Ver en OpenLibrary
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

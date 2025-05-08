@@ -1,0 +1,51 @@
+<div class="biblioteca-container">
+  <h1>Biblioteca</h1>
+  
+  <app-search (search)="onSearch()" [(query)]="searchQuery"></app-search>
+  
+  <div *ngIf="isLoading" class="loading">Cargando...</div>
+   <!--  
+  <div *ngIf="!isLoading && books.length === 0 && searchQuery" class="no-results">
+    No se encontraron resultados para "{{ searchQuery }}"
+  </div>
+  -->
+  
+  
+  <h2 *ngIf="!isLoading && books.length > 0">Resultados de búsqueda</h2>
+  <h2 *ngIf="!isLoading && books.length === 0 && searchQuery === ''">Libros recomendados</h2>
+  
+  <div class="books-grid">
+    <app-card 
+      *ngFor="let book of books.length > 0 ? books : randomBooks" 
+      [book]="book"
+      (cardClicked)="selectedBook = $event">
+    </app-card>
+  </div>
+  
+  <!-- Paginación para resultados de búsqueda -->
+  <app-pagination 
+    *ngIf="books.length > 0"
+    [currentPage]="currentPage" 
+    [totalItems]="totalItems" 
+    [itemsPerPage]="itemsPerPage"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
+  
+  <!-- Controles de navegación para libros recomendados -->
+  <div *ngIf="books.length === 0 && searchQuery === '' && randomBooks.length > 0" 
+       class="recommended-nav">
+    <button (click)="prevRecommendedPage()" 
+            [disabled]="currentRecommendedPage === 1"
+            class="nav-button">
+      Anterior
+    </button>
+    <span class="page-info">Página {{currentRecommendedPage}} de {{getTotalRecommendedPages()}}</span>
+    <button (click)="nextRecommendedPage()" 
+            [disabled]="currentRecommendedPage * itemsPerPage >= totalRecommendedItems"
+            class="nav-button">
+      Siguiente
+    </button>
+  </div>
+  
+  <app-modal *ngIf="selectedBook" [book]="selectedBook" (close)="selectedBook = null"></app-modal>
+</div>
